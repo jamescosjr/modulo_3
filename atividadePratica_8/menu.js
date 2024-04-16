@@ -28,7 +28,7 @@ function mostrarMenu() {
     console.log(MENU_MESSAGE);
 
     rl.question("Escolha uma opção: ", (opcao) => {
-        const opcaoSelecionada = opcoesMenu[opcao.trim()]; // Remover espaços em branco
+        const opcaoSelecionada = opcoesMenu[opcao.trim()];
         if (opcaoSelecionada) {
             opcaoSelecionada();
         } else {
