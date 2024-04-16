@@ -19,16 +19,16 @@ function showMenu() {
 
     rl.question("Choose your level: ", (level) => {
         if (level === '1') {
-            attempts = 50;
-            letsPlay(attempts, rl);
-        } else if (level === '2') {
-            attempts = 25;
-            letsPlay(attempts, rl);
-        } else if (level === '3') {
             attempts = 10;
             letsPlay(attempts, rl);
+        } else if (level === '2') {
+            attempts = 8;
+            letsPlay(attempts, rl);
+        } else if (level === '3') {
+            attempts = 6;
+            letsPlay(attempts, rl);
         } else if (level === '4') {
-            attempts = 5;
+            attempts = 4;
             letsPlay(attempts, rl);
         } else if (level === '5') {
             attempts = 2;
