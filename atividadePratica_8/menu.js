@@ -1,10 +1,4 @@
-const readline = require('readline');
-const { adicionarItem, removerItem, marcarItemComoComprado, exibirListaDeCompras } = require('./listaDeCompras');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const rl = require('./inputHandler');
 
 const MENU_MESSAGE = `
 =============== Lista de Compras ===============
@@ -16,11 +10,13 @@ const MENU_MESSAGE = `
 ===============================================
 `;
 
+const listaDeCompras = require('./listaDeCompras');
+
 const opcoesMenu = {
-    '1': adicionarItem,
-    '2': removerItem,
-    '3': marcarItemComoComprado,
-    '4': exibirListaDeCompras,
+    '1': listaDeCompras.adicionarItem,
+    '2': listaDeCompras.removerItem,
+    '3': listaDeCompras.marcarItemComoComprado,
+    '4': listaDeCompras.exibirListaDeCompras,
     '5': () => rl.close()
 };
 
