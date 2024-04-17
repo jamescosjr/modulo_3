@@ -1,4 +1,6 @@
-const rl = require('./inputHandler');
+const rl = require('./input');
+const { mostrarMenu } = require('./menu');
+
 let listaDeCompras = new Map();
 
 function adicionarItem() {
@@ -11,7 +13,7 @@ function adicionarItem() {
             } else {
                 console.log("Preço inválido. Digite um valor numérico positivo.");
             }
-            mostrarMenu();
+            iniciarMenu();
         });
     });
 }
@@ -24,7 +26,7 @@ function removerItem() {
         } else {
             console.log(`O item "${nomeItem}" não está na lista.`);
         }
-        mostrarMenu();
+        iniciarMenu();
     });
 }
 
@@ -37,7 +39,7 @@ function marcarItemComoComprado() {
         } else {
             console.log(`O item "${nomeItem}" não está na lista.`);
         }
-        mostrarMenu();
+        iniciarMenu();
     });
 }
 
@@ -48,6 +50,10 @@ function exibirListaDeCompras() {
         console.log(`${nomeItem}: R$ ${item.preco.toFixed(2)}${status}`);
     });
     console.log("===============================================");
+    iniciarMenu();
+}
+
+function iniciarMenu() {
     mostrarMenu();
 }
 

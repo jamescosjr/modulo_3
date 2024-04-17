@@ -1,4 +1,4 @@
-const rl = require('./inputHandler');
+const rl = require('./input');
 
 const MENU_MESSAGE = `
 =============== Lista de Compras ===============
@@ -10,20 +10,19 @@ const MENU_MESSAGE = `
 ===============================================
 `;
 
-const listaDeCompras = require('./listaDeCompras');
-
-const opcoesMenu = {
-    '1': listaDeCompras.adicionarItem,
-    '2': listaDeCompras.removerItem,
-    '3': listaDeCompras.marcarItemComoComprado,
-    '4': listaDeCompras.exibirListaDeCompras,
-    '5': () => rl.close()
-};
-
 function mostrarMenu() {
     console.log(MENU_MESSAGE);
 
     rl.question("Escolha uma opção: ", (opcao) => {
+        const { adicionarItem, removerItem, marcarItemComoComprado, exibirListaDeCompras } = require('./listaDeCompras');
+        const opcoesMenu = {
+            '1': adicionarItem,
+            '2': removerItem,
+            '3': marcarItemComoComprado,
+            '4': exibirListaDeCompras,
+            '5': () => rl.close()
+        };
+
         const opcaoSelecionada = opcoesMenu[opcao.trim()];
         if (opcaoSelecionada) {
             opcaoSelecionada();
