@@ -2,7 +2,7 @@ const MENSAGENS = {
     MENU_PRINCIPAL: `
 =============== Bem-vindos à Gestão Acadêmica ===============
 1. Adicionar aluno
-2. Buscar aluno por chave
+2. Buscar chave nos detalhes do aluno
 3. Sair
 `,
     OPCAO_INVALIDA: "Opção inválida. Escolha uma opção válida.\n",
