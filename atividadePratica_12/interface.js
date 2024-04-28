@@ -1,5 +1,5 @@
 const readline = require('readline');
-const { adicionarAluno, buscarAlunoPorChave } = require('./alunos');
+const { adicionarAluno, buscarChaveEmAlunos } = require('./alunos');
 const MENSAGENS = require('./constantes');
 
 const rl = readline.createInterface({
@@ -14,7 +14,7 @@ function mostrarMenu() {
 
 const acoesMenu = {
     '1': adicionarNovoAluno,
-    '2': buscarAluno,
+    '2': buscarChaveAluno,
     '3': sair
 };
 
@@ -28,38 +28,44 @@ function escolhaMenu(opcao) {
     }
 }
 
-function buscarAlunoPorCriterio(criterio, valor) {
-    return buscarAlunoPorChave(criterio, valor);
-}
-
 function adicionarNovoAluno() {
     rl.question("Digite o nome do aluno: ", nome => {
         rl.question("Digite a idade do aluno: ", idade => {
             rl.question("Digite o curso do aluno: ", curso => {
                 rl.question("Digite a média do aluno: ", media => {
-                    adicionarAluno(nome, idade, curso, parseFloat(media));
-                    console.log(MENSAGENS.ALUNO_ADICIONADO);
-                    mostrarMenu();
+                    const solicitarDetalhes = () => {
+                        rl.question("Digite detalhes adicionais em formato JSON (ex: {\"contato\": {\"email\": \"exemplo@dominio.com\"}}): ", detalhes => {
+                            try {
+                                const detalhesObj = JSON.parse(detalhes);
+                                adicionarAluno(nome, idade, curso, parseFloat(media), detalhesObj);
+                                console.log(MENSAGENS.ALUNO_ADICIONADO);
+                                mostrarMenu();
+                            } catch (e) {
+                                console.log("JSON inválido. Por favor, digite um JSON válido.");
+                                solicitarDetalhes(); // Chama a função novamente para pedir os detalhes corretos
+                            }
+                        });
+                    };
+                    solicitarDetalhes();
                 });
             });
         });
     });
 }
 
-function buscarAluno() {
-    rl.question("Digite o critério de busca (nome, idade, curso, media): ", criterio => {
-        rl.question(`Digite o ${criterio} para busca: `, valor => {
-            const alunosEncontrados = buscarAlunoPorCriterio(criterio, valor);
-            if (alunosEncontrados.length === 0) {
-                console.log(MENSAGENS.NENHUM_ALUNO_ENCONTRADO);
-            } else {
-                console.log("Aluno(s) encontrado(s):");
-                alunosEncontrados.forEach(aluno => {
-                    console.log(`Nome: ${aluno.nome}, Idade: ${aluno.idade}, Curso: ${aluno.curso}, Média: ${aluno.media}`);
-                });
-            }
-            mostrarMenu();
-        });
+function buscarChaveAluno() {
+    rl.question("Digite a chave de busca: ", chave => {
+        const alunosEncontrados = buscarChaveEmAlunos(chave);
+        if (alunosEncontrados.length === 0) {
+            console.log(MENSAGENS.NENHUM_ALUNO_ENCONTRADO);
+        } else {
+            console.log("Aluno(s) encontrado(s):");
+            alunosEncontrados.forEach(aluno => {
+                console.log(`Nome: ${aluno.nome}, Idade: ${aluno.idade}, Curso: ${aluno.curso}, Média: ${aluno.media}`);
+                console.log(`Detalhes: ${JSON.stringify(aluno.detalhes)}`);
+            });
+        }
+        mostrarMenu();
     });
 }
 
